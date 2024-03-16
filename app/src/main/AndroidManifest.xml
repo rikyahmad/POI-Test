@@ -16,7 +16,7 @@
         android:theme="@style/Theme.POITest"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.home.HomeActivity"
+            android:name=".ui.presentation.home.view.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.POITest">
             <intent-filter>

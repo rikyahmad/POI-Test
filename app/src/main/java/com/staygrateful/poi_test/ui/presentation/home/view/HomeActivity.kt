@@ -1,4 +1,4 @@
-package com.staygrateful.poi_test.ui.view.home
+package com.staygrateful.poi_test.ui.presentation.home.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,11 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.staygrateful.poi_test.data.models.NetworkResult
-import com.staygrateful.poi_test.data.models.request.SearchRequest
+import com.staygrateful.poi_test.ui.composables.MapView
 import com.staygrateful.poi_test.ui.theme.POITestTheme
-import com.staygrateful.poi_test.ui.view.home.contract.HomepageContract
-import com.staygrateful.poi_test.ui.view.home.viewmodel.HomeViewModel
+import com.staygrateful.poi_test.ui.presentation.home.contract.HomepageContract
+import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +33,7 @@ class HomeActivity : ComponentActivity(), HomepageContract.View {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    MapView(homeViewModel)
                 }
             }
         }
