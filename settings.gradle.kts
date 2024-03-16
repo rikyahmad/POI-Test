@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "POI-Test"
 include(":app")
- 
+include(":osm-android")

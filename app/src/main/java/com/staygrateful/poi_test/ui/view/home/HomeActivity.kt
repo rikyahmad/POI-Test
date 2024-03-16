@@ -23,6 +23,8 @@ class HomeActivity : ComponentActivity(), HomepageContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        homeViewModel.setupLocationListener(this)
+
         setContent {
             POITestTheme(
                 darkTheme = false // This project only support light time to saving time
