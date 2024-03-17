@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.staygrateful.poi_test.ui.composables.MapView
 import com.staygrateful.poi_test.ui.theme.POITestTheme
 import com.staygrateful.poi_test.ui.presentation.home.contract.HomepageContract
+import com.staygrateful.poi_test.ui.presentation.home.view.composable.MapScreen
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +33,7 @@ class HomeActivity : ComponentActivity(), HomepageContract.View {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MapView(homeViewModel)
+                    MapScreen(homeViewModel)
                 }
             }
         }

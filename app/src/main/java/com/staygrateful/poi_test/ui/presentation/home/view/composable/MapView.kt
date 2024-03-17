@@ -1,4 +1,4 @@
-package com.staygrateful.poi_test.ui.composables
+package com.staygrateful.poi_test.ui.presentation.home.view.composable
 
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.Box
@@ -26,6 +26,7 @@ import com.staygrateful.osm.compose.rememberOverlayManagerState
 import com.staygrateful.poi_test.Config
 import com.staygrateful.poi_test.R
 import com.staygrateful.poi_test.external.extension.offsetDefault
+import com.staygrateful.poi_test.ui.composables.MarkerText
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorPinLocation
 import com.staygrateful.poi_test.ui.theme.ColorRadiusLocation
@@ -150,13 +151,6 @@ fun MapView(
             }
         }
 
-        /*MapNavigation(
-            modifier = Modifier,
-            viewModels = viewModels,
-            overlayManagerState = overlayManagerState,
-            translationY = animateTranslationY.value.convertToDp(),
-            cameraState = cameraState,
-            maps, sheet, btnTopStart, btnTopEnd, btnBottomStart, btnBottomEnd
-        )*/
+        MapNav()
     }
 }

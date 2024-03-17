@@ -20,7 +20,7 @@ fun CustomButton(
     shape: Shape? = null,
     enabled: Boolean = true,
     borderWidth: Dp = 0.dp,
-    borderColor: Color = Color.Gray,
+    borderColor: Color = Color.Transparent,
     color: Color = Color.White,
     contentColor: Color = Color.Red,
     elevation: Dp = 0.dp,
