@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.staygrateful.poi_test.ui.theme.ColorContainerDark
+import com.staygrateful.poi_test.ui.theme.ColorFormField
 import com.staygrateful.poi_test.ui.theme.ColorPrimary
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -159,8 +160,8 @@ fun SearchInputField(
                     isError = false,
                     interactionSource = remember { MutableInteractionSource() },
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = ColorContainerDark,
-                        unfocusedContainerColor = ColorContainerDark,
+                        focusedContainerColor = ColorFormField,
+                        unfocusedContainerColor = ColorFormField,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = ColorPrimary,
@@ -177,6 +178,7 @@ fun SearchInputField(
                     .height(35.dp),
                 contentPadding = PaddingValues(),
                 shape = RoundedCornerShape(rounded),
+                color = Color.Transparent,
                 onClick = {
                     onCancel.invoke()
                 }) {

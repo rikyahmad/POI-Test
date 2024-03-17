@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -25,6 +27,7 @@ import com.staygrateful.osm.compose.rememberMarkerState
 import com.staygrateful.osm.compose.rememberOverlayManagerState
 import com.staygrateful.poi_test.Config
 import com.staygrateful.poi_test.R
+import com.staygrateful.poi_test.data.models.dummyCoordinatesList
 import com.staygrateful.poi_test.external.extension.offsetDefault
 import com.staygrateful.poi_test.ui.composables.MarkerText
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
@@ -48,8 +51,16 @@ fun MapView(
 
     val overlayManagerState = rememberOverlayManagerState()
 
+    var visiblePinLocation by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val myLocationState = rememberMarkerState(
         geoPoint = viewModels.currentGeoLocation
+    )
+
+    val pinLocationState = rememberMarkerState(
+        geoPoint = dummyCoordinatesList.first().geo
     )
 
     val cameraState = rememberCameraState {
@@ -89,6 +100,10 @@ fun MapView(
             overlayManagerState = overlayManagerState,
             properties = mapProperties,
             onMapLongClick = {},
+            onMapClick = {
+                pinLocationState.geoPoint = it
+                visiblePinLocation = true
+            },
             onRotationListener = { value ->
                 scope.launch(Dispatchers.Main) {
                     viewModels.mapOrientation.snapTo(value)
@@ -124,6 +139,33 @@ fun MapView(
                         color = Color.White,
                     )
                 }
+            }
+
+            Marker(
+                state = pinLocationState,
+                icon = AppCompatResources.getDrawable(context, R.drawable.ic_location)?.apply {
+                    DrawableCompat.setTint(this, ColorPinLocation.toArgb())
+                },
+                iconSize = 35.dp,
+                title = "Pin Location",
+                snippet = "Pinned",
+                visible = visiblePinLocation,
+                visibleInfo = visiblePinLocation,
+                polygonClickListener = { polygon, mapView, eventPos ->
+                    true
+                },
+                onClick = { marker ->
+                    true
+                }
+            ) {
+                MarkerText(
+                    onClick = {
+
+                    },
+                    title = it.title,
+                    contentColor = Color.Black,
+                    color = Color.White,
+                )
             }
 
             Marker(state = myLocationState,

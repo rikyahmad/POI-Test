@@ -1,5 +1,6 @@
 package com.staygrateful.poi_test.ui.presentation.home.view.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,6 +15,7 @@ import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.ui.composables.SearchInputField
 import com.staygrateful.poi_test.ui.navigation.Screen
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
+import com.staygrateful.poi_test.ui.theme.ColorContainerDark
 
 @Composable
 fun SearchView(
@@ -37,6 +39,7 @@ fun SearchView(
 
     Column(
         modifier = Modifier
+            .background(ColorContainerDark)
             .fillMaxHeight(0.95f)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally

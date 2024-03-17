@@ -29,6 +29,7 @@ import com.staygrateful.poi_test.ui.navigation.Screen
 import com.staygrateful.poi_test.ui.navigation.SearchNavGraph
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorContainer
+import com.staygrateful.poi_test.ui.theme.ColorContainerDark
 import com.staygrateful.poi_test.ui.theme.bottomPeekHeight
 import com.staygrateful.poi_test.ui.theme.bottomSheetElevation
 import kotlinx.coroutines.Dispatchers
@@ -96,7 +97,7 @@ fun MapScreen(
         sheetPeekHeight = bottomPeekHeight,
         scaffoldState = searchSheetState,
         sheetShadowElevation = bottomSheetElevation,
-        sheetContainerColor = ColorContainer,
+        sheetContainerColor = ColorContainerDark,
         sheetDragHandle = {
             dragHandle()
         },
@@ -108,11 +109,6 @@ fun MapScreen(
                     expandSearchBottomSheet(it)
                 }
             )
-            /*Button(onClick = {
-                navController.navigate(Screen.DetailSearchScreen.route)
-            }) {
-                Text(text = "Next")
-            }*/
         },
         content = {
             MapView(viewModels = viewModels)

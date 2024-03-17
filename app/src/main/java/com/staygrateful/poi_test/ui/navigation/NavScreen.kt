@@ -43,7 +43,7 @@ sealed class Screen(val route: String) {
 
     data object DetailSearchScreen : Screen(route = "detail_search")
 
-    data object ListSearchScreen : Screen(route = "list_search")
+    data object LocationDetailScreen : Screen(route = "location_detail")
 }
 
 object Argument {

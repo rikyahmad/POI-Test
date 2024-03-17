@@ -44,6 +44,7 @@ import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorClosed
 import com.staygrateful.poi_test.ui.theme.ColorContainerDark
 import com.staygrateful.poi_test.ui.theme.ColorDivider
+import com.staygrateful.poi_test.ui.theme.ColorDividerDark
 import com.staygrateful.poi_test.ui.theme.ColorOpen
 import com.staygrateful.poi_test.ui.theme.ColorRating
 import java.util.Locale
@@ -87,7 +88,7 @@ fun SearchDetailView(
     onExpandChanged.invoke(true)
 
     Column(
-        //modifier = Modifier.requiredHeightIn(max = 500.dp)
+        modifier = Modifier.background(ColorContainerDark)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 20.dp),
@@ -97,7 +98,7 @@ fun SearchDetailView(
                 imageVector = Icons.Default.Search,
                 "Test",
                 modifier = Modifier
-                    .background(ColorContainerDark, CircleShape)
+                    .background(ColorDividerDark, CircleShape)
                     .padding(7.dp)
                     .size(24.dp),
                 tint = Color.Black
@@ -146,7 +147,7 @@ fun SearchDetailView(
             modifier = Modifier
                 .height(1.dp)
                 .fillMaxWidth()
-                .background(ColorDivider)
+                .background(ColorDividerDark)
         )
 
         LazyColumn(
@@ -159,7 +160,7 @@ fun SearchDetailView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-
+                            viewModels.navigateToLocationDetails(navController, data)
                         }
                         .padding(horizontal = 20.dp),
                 ) {
@@ -168,7 +169,7 @@ fun SearchDetailView(
                             modifier = Modifier
                                 .height(1.dp)
                                 .fillMaxWidth()
-                                .background(ColorDivider)
+                                .background(ColorDividerDark)
                         )
                     }
                     Row(
