@@ -16,6 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.staygrateful.osm.extension.showToast
 import com.staygrateful.osm.helper.LocationBuilder
+import com.staygrateful.poi_test.data.models.NetworkResult
 import com.staygrateful.poi_test.data.models.dummyCoordinatesList
 import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
@@ -24,6 +25,7 @@ import com.staygrateful.poi_test.domain.interactor.HomepageInteractor
 import com.staygrateful.poi_test.external.util.HandlerUtil
 import com.staygrateful.poi_test.ui.presentation.home.contract.HomepageContract
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
@@ -43,9 +45,9 @@ class HomeViewModel @Inject constructor(
 
     val coordinateList = _coordinatesList.asStateFlow()
 
-    private val _searchResponse: MutableLiveData<List<SearchResponse.Data>?> = MutableLiveData()
+    private val _searchResponse: MutableLiveData<NetworkResult<SearchResponse>> = MutableLiveData()
 
-    val searchResponse: LiveData<List<SearchResponse.Data>?> = _searchResponse
+    val searchResponse: LiveData<NetworkResult<SearchResponse>> = _searchResponse
 
     private val _autocompletedResponse: MutableLiveData<List<AutocompleteResponse.Data>?> =
         MutableLiveData()
@@ -94,8 +96,9 @@ class HomeViewModel @Inject constructor(
         searchLoading = true
         viewModelScope.launch {
             homepageInteractor.search(request).collect { values ->
-                _searchResponse.value = values.data?.data
-                //searchLoading = false
+                _searchResponse.value = values
+                delay(3000)
+                searchLoading = false
             }
         }
     }

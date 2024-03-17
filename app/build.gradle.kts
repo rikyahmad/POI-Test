@@ -116,6 +116,9 @@ dependencies {
 
     //OSM
     implementation("org.osmdroid:osmdroid-android:6.1.17")
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }
 
 // Allow references to generated code

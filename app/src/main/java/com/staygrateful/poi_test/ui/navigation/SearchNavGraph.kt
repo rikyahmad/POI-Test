@@ -3,6 +3,7 @@ package com.staygrateful.poi_test.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.staygrateful.poi_test.ui.presentation.home.view.composable.SearchDetailView
 import com.staygrateful.poi_test.ui.presentation.home.view.composable.SearchView
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 
@@ -10,6 +11,7 @@ import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 fun SearchNavGraph(
     navController: NavHostController,
     homeViewModel: HomeViewModel,
+    onExpandChanged: (Boolean) -> Unit,
 ) {
     NavHost(navController = navController, startDestination = Screen.RootScreen.route) {
 
@@ -18,10 +20,19 @@ fun SearchNavGraph(
         ) {
             SearchView(
                 navController = navController,
-                viewModels = homeViewModel
-            ) {
+                viewModels = homeViewModel,
+                onExpandChanged
+            )
+        }
 
-            }
+        composableSlide(
+            route = Screen.DetailSearchScreen.route,
+        ) {
+            SearchDetailView(
+                navController = navController,
+                viewModels = homeViewModel,
+                onExpandChanged
+            )
         }
 
         /*composableSlide(

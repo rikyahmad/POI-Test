@@ -52,7 +52,12 @@ data class SearchResponse(
         val working_hours: Any?,
         val zipcode: String?
     ) {
-        data class About(
+
+        val isOpen: Boolean get() = business_status?.lowercase()?.contains("open") == true
+
+        val status: String get() = if (isOpen) "Open" else "Closed"
+
+        class About(
             val details: Any?,
             val summary: String?
         )

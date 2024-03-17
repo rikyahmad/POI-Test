@@ -8,17 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +25,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.staygrateful.poi_test.external.extension.back
+import com.staygrateful.poi_test.ui.navigation.Screen
 import com.staygrateful.poi_test.ui.navigation.SearchNavGraph
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorContainer
@@ -56,27 +55,18 @@ fun MapScreen(
 
     fun expandSearchBottomSheet(expand: Boolean) {
         scope.launch(Dispatchers.Main) {
-            awaitAll(
-                async {
-                    viewModels.visibleSearchCancel = expand
-                },
-                async {
-                    if (expand) {
-                        searchSheetState.bottomSheetState.expand()
-                        return@async
-                    }
-                    focusManager.clearFocus()
-                    searchSheetState.bottomSheetState.partialExpand()
-                }
-            )
+            if (expand) {
+                searchSheetState.bottomSheetState.expand()
+                return@launch
+            }
+            focusManager.clearFocus()
+            searchSheetState.bottomSheetState.partialExpand()
         }
     }
 
     LaunchedEffect(searchSheetState.bottomSheetState) {
         snapshotFlow { searchSheetState.bottomSheetState.currentValue }.collect {
-            if (searchSheetState.bottomSheetState.currentValue != SheetValue.Expanded) {
-                expandSearchBottomSheet(false)
-            }
+            viewModels.visibleSearchCancel = it == SheetValue.Expanded
         }
     }
 
@@ -114,7 +104,15 @@ fun MapScreen(
             SearchNavGraph(
                 navController = navController,
                 viewModels,
+                onExpandChanged = {
+                    expandSearchBottomSheet(it)
+                }
             )
+            /*Button(onClick = {
+                navController.navigate(Screen.DetailSearchScreen.route)
+            }) {
+                Text(text = "Next")
+            }*/
         },
         content = {
             MapView(viewModels = viewModels)
