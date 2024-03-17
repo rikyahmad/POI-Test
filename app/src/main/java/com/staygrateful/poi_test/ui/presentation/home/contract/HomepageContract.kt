@@ -14,5 +14,7 @@ class HomepageContract {
         fun setupLocationListener(activity: ComponentActivity)
 
         fun search(request: SearchRequest)
+
+        fun autocompleted(request: SearchRequest)
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -15,16 +16,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.staygrateful.osm.extension.showToast
 import com.staygrateful.osm.helper.LocationBuilder
-import com.staygrateful.poi_test.data.models.Coordinates
 import com.staygrateful.poi_test.data.models.NetworkResult
 import com.staygrateful.poi_test.data.models.dummyCoordinatesList
 import com.staygrateful.poi_test.data.models.request.SearchRequest
+import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.data.models.response.SearchResponse
 import com.staygrateful.poi_test.domain.interactor.HomepageInteractor
+import com.staygrateful.poi_test.external.util.HandlerUtil
 import com.staygrateful.poi_test.ui.presentation.home.contract.HomepageContract
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
 import javax.inject.Inject
@@ -37,12 +45,19 @@ class HomeViewModel @Inject constructor(
 
     private var locationBuilder: LocationBuilder? = null
 
-    private val _coordinatesList = MutableStateFlow<List<Coordinates>>(dummyCoordinatesList)
+    private val _coordinatesList = MutableStateFlow(dummyCoordinatesList)
 
     val coordinateList = _coordinatesList.asStateFlow()
 
     private val _response: MutableLiveData<NetworkResult<SearchResponse>> = MutableLiveData()
+
     val response: LiveData<NetworkResult<SearchResponse>> = _response
+
+    private val _autocompletedResponse: MutableLiveData<List<AutocompleteResponse.Data>?> =
+        MutableLiveData()
+
+    val autocompletedResponse: LiveData<List<AutocompleteResponse.Data>?> =
+        _autocompletedResponse
 
     private val minimumDistance: Float = 5f
 
@@ -81,6 +96,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             homepageInteractor.search(request).collect { values ->
                 _response.value = values
+            }
+        }
+    }
+
+    override fun autocompleted(request: SearchRequest) {
+        HandlerUtil.collectAtLeast(300, request) {
+            if(it.query.isEmpty()) {
+                _autocompletedResponse.value = listOf()
+                return@collectAtLeast
+            }
+            viewModelScope.launch {
+                homepageInteractor.autocompleted(it).collect { values ->
+                    _autocompletedResponse.value = values.data?.data
+                }
             }
         }
     }

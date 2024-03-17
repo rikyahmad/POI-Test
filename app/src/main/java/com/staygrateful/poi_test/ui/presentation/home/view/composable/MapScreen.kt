@@ -2,7 +2,7 @@ package com.staygrateful.poi_test.ui.presentation.home.view.composable
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,11 +24,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.external.extension.back
 import com.staygrateful.poi_test.ui.composables.SearchInputField
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
@@ -109,14 +111,15 @@ fun MapScreen(
             )
         },
         sheetContent = {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 SearchInputField(
                     margin = PaddingValues(horizontal = 20.dp),
-                    hint = "Search Maps",
+                    hint = "Search nearby location",
                     visibleSearchCancel = visibleSearchCancel,
                     onFocusChanged = { focus ->
                         if (focus.isFocused) {
@@ -127,9 +130,16 @@ fun MapScreen(
                         expandBottomSheet(false)
                     },
                     onValueChange = {
-
+                        viewModels.autocompleted(
+                            SearchRequest.autocompleted(
+                                it,
+                                lat = viewModels.currentGeoLocation.latitude,
+                                lng = viewModels.currentGeoLocation.longitude,
+                            )
+                        )
                     }
                 )
+                MapAutoCompleteList(viewModels)
             }
         }
     ) {

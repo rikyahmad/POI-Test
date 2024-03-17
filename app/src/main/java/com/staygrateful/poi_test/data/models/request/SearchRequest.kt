@@ -8,6 +8,7 @@ class SearchRequest private constructor(
     val zoom: Int? = null,
     val language: String? = null,
     val region: String? = null,
+    val coordinates: String? = null,
 ) {
 
     companion object {
@@ -36,6 +37,19 @@ class SearchRequest private constructor(
         ): SearchRequest {
             return SearchRequest(
                 query, limit, lat, lng, null, language, region
+            )
+        }
+
+        fun autocompleted(
+            query: String,
+            language: String? = null,
+            region: String? = null,
+            lat: Double? = null,
+            lng: Double? = null,
+        ): SearchRequest {
+            val coordinates = if(lat != null && lng != null) "$lat,$lng" else null
+            return SearchRequest(
+                query, null, null, null, null, language, region, coordinates
             )
         }
     }

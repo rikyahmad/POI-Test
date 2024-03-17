@@ -102,7 +102,7 @@ fun SearchInputField(
             decorationBox = @Composable { innerTextField ->
                 // places leading icon, text field with label and placeholder, trailing icon
                 TextFieldDefaults.DecorationBox(
-                    contentPadding = PaddingValues(horizontal = 10.dp),
+                    contentPadding = PaddingValues(horizontal = 7.dp),
                     value = value,
                     innerTextField = innerTextField,
                     visualTransformation = VisualTransformation.None,
@@ -140,6 +140,7 @@ fun SearchInputField(
                                     .clip(CircleShape)
                                     .clickable {
                                         value = ""
+                                        onValueChange.invoke(value)
                                     }
                                     .padding(3.dp)
                                     .size(18.dp)
