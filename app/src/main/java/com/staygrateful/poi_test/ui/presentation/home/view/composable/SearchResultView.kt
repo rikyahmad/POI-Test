@@ -27,40 +27,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
+import com.staygrateful.poi_test.data.models.response.SearchResponse
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorContainerDark
 import com.staygrateful.poi_test.ui.theme.ColorDivider
 
 @Composable
-fun ColumnScope.MapAutoCompleteList(
-    viewModels: HomeViewModel,
-    onItemPressed: (AutocompleteResponse.Data) -> Unit
+fun ColumnScope.SearchResultView(
+    viewModels: HomeViewModel, onItemPressed: (SearchResponse.Data) -> Unit
 ) {
 
     val lazyListState = rememberLazyListState()
-    val responseItems by viewModels.autocompletedResponse.observeAsState()
+
+    val responseItems by viewModels.searchResponse.observeAsState()
 
     if (responseItems.isNullOrEmpty()) {
+        Text(
+            text = "Result Not Found",
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            fontSize = 12.sp
+        )
         return
     }
 
-    Spacer(
-        modifier = Modifier
-            .padding(top = 20.dp)
-            .height(1.dp)
-            .fillMaxWidth()
-            .background(ColorDivider)
-    )
-
     LazyColumn(
         modifier = Modifier.weight(1f),
-        state = lazyListState,
-
-        ) {
+        state = lazyListState
+    ) {
         itemsIndexed(responseItems!!) { index, data ->
             Box(
                 modifier = Modifier
@@ -98,14 +96,14 @@ fun ColumnScope.MapAutoCompleteList(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = data.main_text ?: "-",
+                            text = data.name ?: "-",
                             fontSize = 13.5.sp,
                             fontWeight = FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = data.description ?: "-",
+                            text = data.full_address ?: "-",
                             fontSize = 11.5.sp,
                             fontWeight = FontWeight.Normal,
                             maxLines = 1,

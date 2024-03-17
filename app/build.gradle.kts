@@ -78,6 +78,8 @@ dependencies {
     implementation(project(":osm-android"))
     val hiltVersion = "2.50"
     val retrofitVersion = "2.9.0"
+    val accompanistVersion = "0.28.0"
+    val navVersion = "2.7.7"
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.core:core-ktx:1.12.0")
@@ -97,6 +99,10 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    implementation("com.google.accompanist:accompanist-navigation-animation:$accompanistVersion")
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

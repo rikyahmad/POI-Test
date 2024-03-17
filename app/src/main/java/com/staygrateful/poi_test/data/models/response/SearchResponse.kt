@@ -3,7 +3,6 @@ package com.staygrateful.poi_test.data.models.response
 import com.google.gson.annotations.SerializedName
 
 data class SearchResponse(
-
     val data: List<Data>?,
     val parameters: Parameters?,
     val request_id: String?,
