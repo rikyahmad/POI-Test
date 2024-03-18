@@ -6,6 +6,8 @@ import com.staygrateful.poi_test.data.models.request.BusinessRequest
 import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.data.models.response.BusinessDetailsResponse
+import com.staygrateful.poi_test.data.models.response.BusinessPhotoResponse
+import com.staygrateful.poi_test.data.models.response.BusinessReviewResponse
 import com.staygrateful.poi_test.data.models.response.SearchResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
@@ -99,6 +101,36 @@ class Repository @Inject constructor(
                     region = request.region,
                     extractEmailsContacts = request.extractEmailsContacts,
                     coordinates = request.coordinates,
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun businessPhotos(
+        request: BusinessRequest
+    ): Flow<NetworkResult<BusinessPhotoResponse>> {
+        return flow {
+            emit(safeApiCall {
+                remoteDataSource.businessPhotos(
+                    businessId = request.business_id,
+                    limit = request.limit,
+                    language = request.language,
+                    region = request.region,
+                )
+            })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun businessReviews(
+        request: BusinessRequest
+    ): Flow<NetworkResult<BusinessReviewResponse>> {
+        return flow {
+            emit(safeApiCall {
+                remoteDataSource.businessReviews(
+                    businessId = request.business_id,
+                    limit = request.limit,
+                    language = request.language,
+                    region = request.region,
                 )
             })
         }.flowOn(Dispatchers.IO)

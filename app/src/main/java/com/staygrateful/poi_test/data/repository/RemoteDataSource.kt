@@ -4,6 +4,8 @@ import com.staygrateful.poi_test.data.api.ApiService
 import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.data.models.response.BusinessDetailsResponse
+import com.staygrateful.poi_test.data.models.response.BusinessPhotoResponse
+import com.staygrateful.poi_test.data.models.response.BusinessReviewResponse
 import com.staygrateful.poi_test.data.models.response.SearchResponse
 import retrofit2.Response
 import javax.inject.Inject
@@ -64,6 +66,24 @@ class RemoteDataSource @Inject constructor(
         coordinates: String?
     ): Response<BusinessDetailsResponse> {
         return apiService.businessDetails(businessId, language, region, extractEmailsContacts, coordinates)
+    }
+
+    override suspend fun businessPhotos(
+        businessId: String,
+        limit: Int?,
+        language: String?,
+        region: String?
+    ): Response<BusinessPhotoResponse> {
+        return apiService.businessPhotos(businessId, limit, language, region)
+    }
+
+    override suspend fun businessReviews(
+        businessId: String,
+        limit: Int?,
+        language: String?,
+        region: String?
+    ): Response<BusinessReviewResponse> {
+        return apiService.businessReviews(businessId, limit, language, region)
     }
 
 }

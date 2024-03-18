@@ -75,12 +75,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":osm-android"))
     val hiltVersion = "2.50"
     val retrofitVersion = "2.9.0"
     val accompanistVersion = "0.28.0"
     val navVersion = "2.7.7"
 
+    implementation(project(":osm-android"))
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -100,6 +100,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
     implementation("com.google.accompanist:accompanist-navigation-animation:$accompanistVersion")
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")

@@ -6,6 +6,8 @@ import com.staygrateful.poi_test.data.models.request.BusinessRequest
 import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.data.models.response.BusinessDetailsResponse
+import com.staygrateful.poi_test.data.models.response.BusinessPhotoResponse
+import com.staygrateful.poi_test.data.models.response.BusinessReviewResponse
 import com.staygrateful.poi_test.data.models.response.SearchResponse
 import com.staygrateful.poi_test.data.repository.Repository
 import com.staygrateful.poi_test.domain.usecase.HomepageUseCase
@@ -44,5 +46,17 @@ class HomepageInteractor @Inject constructor(
         request: BusinessRequest
     ): Flow<NetworkResult<BusinessDetailsResponse>> {
         return repository.businessDetails(request)
+    }
+
+    override suspend fun businessPhotos(
+        request: BusinessRequest
+    ): Flow<NetworkResult<BusinessPhotoResponse>> {
+        return repository.businessPhotos(request)
+    }
+
+    override suspend fun businessReviews(
+        request: BusinessRequest
+    ): Flow<NetworkResult<BusinessReviewResponse>> {
+        return repository.businessReviews(request)
     }
 }

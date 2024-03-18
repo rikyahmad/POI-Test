@@ -2,6 +2,8 @@ package com.staygrateful.poi_test.data.api
 
 import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.data.models.response.BusinessDetailsResponse
+import com.staygrateful.poi_test.data.models.response.BusinessPhotoResponse
+import com.staygrateful.poi_test.data.models.response.BusinessReviewResponse
 import com.staygrateful.poi_test.data.models.response.SearchResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -91,11 +93,29 @@ interface ApiService {
         @Query("coordinates") coordinates: String? = null,
     ): Response<BusinessDetailsResponse>
 
+    @GET(BUSINESS_PHOTOS)
+    suspend fun businessPhotos(
+        @Query("business_id") businessId: String,
+        @Query("limit") limit: Int? = null,
+        @Query("language") language: String? = null,
+        @Query("region") region: String? = null,
+    ): Response<BusinessPhotoResponse>
+
+    @GET(BUSINESS_REVIEWS)
+    suspend fun businessReviews(
+        @Query("business_id") businessId: String,
+        @Query("limit") limit: Int? = null,
+        @Query("language") language: String? = null,
+        @Query("region") region: String? = null,
+    ): Response<BusinessReviewResponse>
+
     companion object {
         const val SEARCH = "search"
         const val SEARCH_NEARBY = "search-nearby"
         const val SEARCH_IN_AREA = "search-in-area"
         const val BUSINESS_DETAILS = "business-details"
+        const val BUSINESS_PHOTOS = "business-photos"
+        const val BUSINESS_REVIEWS = "business-reviews"
         const val AUTO_COMPLETED = "autocomplete"
     }
 }

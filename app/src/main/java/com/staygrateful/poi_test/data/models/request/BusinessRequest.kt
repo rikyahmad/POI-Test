@@ -10,7 +10,7 @@ class BusinessRequest private constructor(
 ) {
     companion object {
 
-        fun with(
+        fun details(
             business_id: String,
             limit: Int? = null,
             language: String? = null,
@@ -20,6 +20,28 @@ class BusinessRequest private constructor(
         ): BusinessRequest {
             return BusinessRequest(
                 business_id, limit,  language, region, coordinates, extractEmailsContacts
+            )
+        }
+
+        fun photos(
+            business_id: String,
+            limit: Int? = null,
+            language: String? = null,
+            region: String? = null,
+        ): BusinessRequest {
+            return BusinessRequest(
+                business_id, limit,  language, region
+            )
+        }
+
+        fun reviews(
+            business_id: String,
+            limit: Int? = null,
+            language: String? = null,
+            region: String? = null,
+        ): BusinessRequest {
+            return BusinessRequest(
+                business_id, limit,  language, region
             )
         }
     }

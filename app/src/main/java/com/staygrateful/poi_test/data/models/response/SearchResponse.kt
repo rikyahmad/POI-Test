@@ -8,6 +8,12 @@ data class SearchResponse(
     val request_id: String?,
     val status: String?
 ) {
+
+    companion object {
+
+        val Initial = SearchResponse(null, null, null, null)
+    }
+
     data class Data(
         val about: About?,
         val address: String?,

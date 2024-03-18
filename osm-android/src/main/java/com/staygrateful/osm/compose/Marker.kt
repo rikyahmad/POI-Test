@@ -13,7 +13,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.staygrateful.osm.R
 import com.staygrateful.osm.extension.toPxInt
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -44,7 +46,8 @@ fun Marker(
     polygonOutlineColor: Color = Color.Transparent,
     polygonClickListener: Polygon.OnClickListener? = null,
     onClick: (Marker) -> Boolean = { false },
-    infoWindowContent: @Composable ((InfoWindowData) -> Unit)? = null
+    customInfoWindow: Boolean = false,
+    infoWindowContent: @Composable ((InfoWindowData) -> Unit) = {}
 ) {
 
     val context = LocalContext.current
@@ -64,7 +67,7 @@ fun Marker(
             polygonClickListener
         )
 
-        val infoWindow = if (infoWindowContent != null) ComposeView(context).apply {
+        val infoWindow = if (customInfoWindow) ComposeView(context).apply {
             setContent {
                 infoWindowContent.invoke(InfoWindowData(title.orEmpty(), snippet.orEmpty()))
             }
@@ -96,9 +99,6 @@ fun Marker(
             polygon = polygon,
         )
     }, update = {
-        update(id) {
-            println("Update id : $id, $title")
-        }
         update(visibleInfo) {
             if (visibleInfo) {
                 marker.showInfoWindow()
@@ -125,6 +125,10 @@ fun Marker(
         update(visible) {
             marker.setVisible(it)
         }
+        update(title) {
+            val iw = marker.infoWindow.view
+            if(iw is TextView) iw.text = title
+        }
         applier.invalidate()
     })
 }
@@ -132,6 +136,9 @@ fun Marker(
 fun createInfoWindow(context: Context, title: String?, snippet: String?): View {
     return TextView(context).apply {
         text = title
+        textSize = 14f
+        setBackgroundResource(R.drawable.bg_marker_info)
+        setTextColor(ContextCompat.getColor(context, R.color.marker_text_color))
     }
 }
 
@@ -214,9 +221,12 @@ fun addMarker(
         this.infoWindow = OsmInfoWindow(
             infoWindow ?: createInfoWindow(mapView.context, title, snippet),
             mapView
-        ).apply {
-            view.setOnClickListener {
-                if (isOpen) close()
+        ).also { infoWindow ->
+            infoWindow.view.setOnClickListener {
+                if (infoWindow.isOpen) {
+                    onClick.invoke(this)
+                    //close()
+                }
             }
         }
 
@@ -234,8 +244,7 @@ fun Marker.setupListeners(
     this.setOnMarkerClickListener { marker, map ->
         val click = onMarkerClick.invoke(marker)
         if (marker.isInfoWindowShown) {
-            marker.closeInfoWindow()
-            //marker.remove(map)
+            //marker.closeInfoWindow()
         } else {
             marker.showInfoWindow()
         }

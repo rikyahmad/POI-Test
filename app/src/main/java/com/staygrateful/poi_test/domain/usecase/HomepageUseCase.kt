@@ -6,6 +6,8 @@ import com.staygrateful.poi_test.data.models.request.BusinessRequest
 import com.staygrateful.poi_test.data.models.request.SearchRequest
 import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.data.models.response.BusinessDetailsResponse
+import com.staygrateful.poi_test.data.models.response.BusinessPhotoResponse
+import com.staygrateful.poi_test.data.models.response.BusinessReviewResponse
 import com.staygrateful.poi_test.data.models.response.SearchResponse
 import kotlinx.coroutines.flow.Flow
 
@@ -30,4 +32,12 @@ interface HomepageUseCase {
     suspend fun businessDetails(
         request: BusinessRequest
     ): Flow<NetworkResult<BusinessDetailsResponse>>
+
+    suspend fun businessPhotos(
+        request: BusinessRequest
+    ): Flow<NetworkResult<BusinessPhotoResponse>>
+
+    suspend fun businessReviews(
+        request: BusinessRequest
+    ): Flow<NetworkResult<BusinessReviewResponse>>
 }

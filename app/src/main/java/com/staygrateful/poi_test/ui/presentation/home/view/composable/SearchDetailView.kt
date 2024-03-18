@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.staygrateful.poi_test.R
 import com.staygrateful.poi_test.ui.composables.SimpleProgressBar
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorClosed
@@ -118,7 +120,10 @@ fun SearchDetailView(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "${responseItems?.data?.data?.size ?: 0} found",
+                    text = stringResource(
+                        R.string.search_found,
+                        responseItems?.data?.data?.size ?: 0
+                    ),
                     fontSize = 11.5.sp,
                     fontWeight = FontWeight.Normal,
                     maxLines = 1,
@@ -247,7 +252,7 @@ fun SearchDetailView(
                                 .data(data.photos_sample?.first()?.photo_url)
                                 .crossfade(true)
                                 .build(),
-                            contentDescription = "image",
+                            contentDescription = "Photo",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .padding(start = 15.dp)
