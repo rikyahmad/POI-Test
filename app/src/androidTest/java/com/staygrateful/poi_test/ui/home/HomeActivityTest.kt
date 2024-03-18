@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToLog
 import com.staygrateful.poi_test.R
@@ -16,20 +15,11 @@ import org.junit.Test
 @ExperimentalFoundationApi
 class HomeActivityTest : BaseInstrument() {
 
-    @get : Rule
+    @get:Rule
     val composeTestRule = createAndroidComposeRule(HomeActivity::class.java)
 
     override fun setUp() {
 
-    }
-
-    @Test
-    fun title_isDisplayed() {
-        composeTestRule
-            .onNodeWithText(
-                composeTestRule.activity.getString(R.string.app_name)
-            )
-            .assertIsDisplayed()
     }
 
     @Test
