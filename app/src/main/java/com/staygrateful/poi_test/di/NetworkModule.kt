@@ -19,11 +19,11 @@ import javax.inject.Named
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+open class NetworkModule {
 
     @Provides
     @Named("base_url")
-    fun provideBaseUrl() = BuildConfig.API_BASE_URL
+    open fun provideBaseUrl() = BuildConfig.API_BASE_URL
 
     @Provides
     fun provideRequestInterceptor(): Interceptor {

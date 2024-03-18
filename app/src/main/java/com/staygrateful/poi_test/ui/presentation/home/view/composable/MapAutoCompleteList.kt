@@ -34,6 +34,7 @@ import com.staygrateful.poi_test.data.models.response.AutocompleteResponse
 import com.staygrateful.poi_test.ui.presentation.home.viewmodel.HomeViewModel
 import com.staygrateful.poi_test.ui.theme.ColorContainerDark
 import com.staygrateful.poi_test.ui.theme.ColorDivider
+import com.staygrateful.poi_test.ui.theme.ColorDividerDark
 
 @Composable
 fun ColumnScope.MapAutoCompleteList(
@@ -53,7 +54,7 @@ fun ColumnScope.MapAutoCompleteList(
             .padding(top = 20.dp)
             .height(1.dp)
             .fillMaxWidth()
-            .background(ColorDivider)
+            .background(ColorDividerDark)
     )
 
     LazyColumn(
@@ -76,7 +77,7 @@ fun ColumnScope.MapAutoCompleteList(
                             .padding(start = 50.dp)
                             .height(1.dp)
                             .fillMaxWidth()
-                            .background(ColorDivider)
+                            .background(ColorDividerDark)
                     )
                 }
                 Row(
@@ -84,9 +85,9 @@ fun ColumnScope.MapAutoCompleteList(
                 ) {
                     Icon(
                         imageVector = Icons.Default.LocationOn,
-                        "Test",
+                        "Location",
                         modifier = Modifier
-                            .background(ColorContainerDark, CircleShape)
+                            .background(ColorDividerDark, CircleShape)
                             .padding(7.dp)
                             .size(21.dp),
                         tint = Color.Black

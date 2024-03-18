@@ -21,4 +21,5 @@
     <string name="no">No</string>
     <string name="unknown">Unknown</string>
     <string name="not_valid_location">Not valid location</string>
+    <string name="test_tag_maps">test-maps-tag</string>
 </resources>
